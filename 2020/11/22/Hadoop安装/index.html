@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux | my precious</title><meta name="author" content="田一顷"><meta name="copyright" content="田一顷"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="#1.下载所需要的安装包链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1gWIBx8A3VQFrjOOwRTBVVg提取码：wsh1复制这段内容后打开百度网盘手机App，操作更方便哦 #2.创建hadoop用户useradd hadoopsu - hadoop 将第一步中的所有安装包放在&#x2F;home&#x2F;hadoop&#x2F;sourcecode #3.创建一些必要的空的文件夹mkdir tmp sou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux">
+<meta property="og:url" content="http://example.com/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="my precious">
+<meta property="og:description" content="#1.下载所需要的安装包链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1gWIBx8A3VQFrjOOwRTBVVg提取码：wsh1复制这段内容后打开百度网盘手机App，操作更方便哦 #2.创建hadoop用户useradd hadoopsu - hadoop 将第一步中的所有安装包放在&#x2F;home&#x2F;hadoop&#x2F;sourcecode #3.创建一些必要的空的文件夹mkdir tmp sou">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-11-22T07:10:20.846Z">
+<meta property="article:modified_time" content="2020-11-24T12:32:21.400Z">
+<meta property="article:author" content="田一顷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2020-11-24 20:32:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">Linux</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-11-22T07:10:20.846Z" title="发表于 2020-11-22 15:10:20">2020-11-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-24T12:32:21.400Z" title="更新于 2020-11-24 20:32:21">2020-11-24</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>#1.下载所需要的安装包<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1gWIBx8A3VQFrjOOwRTBVVg">https://pan.baidu.com/s/1gWIBx8A3VQFrjOOwRTBVVg</a><br>提取码：wsh1<br>复制这段内容后打开百度网盘手机App，操作更方便哦</p>
+<p>#2.创建hadoop用户<br>useradd hadoop<br>su - hadoop</p>
+<p>将第一步中的所有安装包放在/home/hadoop/sourcecode</p>
+<p>#3.创建一些必要的空的文件夹<br>mkdir tmp sourcecode software shell log lib data app</p>
+<p>#4.安装jdk<br>略</p>
+<p>#5.安装hadoop<br>cd sourcecode<br>tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz -C ../app/</p>
+<p>#6.建立软连接<br>ln -s hadoop-2.6.0-cdh5.16.2 hadoop</p>
+<p>#7.修改为显示指定<br>cd app/hadoop/etc/hadoop<br>vi hadoop-env.sh<br>export JAVA_HOME=/usr/java/jdk1.8.0_181<br>属于hadoop的一个小bug</p>
+<p>#8.修改hosts名<br>使用root用户<br>先查看自己的ip<br>ifconfig<br>一般是192开头的，例如自己的是192.168.1.100<br>vi /etc/hosts<br>在最后一行增加<br>192.168.1.100 yourname<br>这里的yourname为自己的名字</p>
+<p>#9.配置ssh yourname无密码认证<br>使用hadoop用户<br>rm -rf .ssh<br>ssh-keygen<br>cd .ssh<br>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>chmod 0600 ~/.ssh/authorized_keys</p>
+<p>ssh yourname date<br>第一次输入会让你再次确定，输入yes，建立关系<br>正常会返回一个日期</p>
+<p>ssh yourname date<br>再次数据做double check</p>
+<p>#10.修改配置文件</p>
+<p>#11.启动hadoop<br>sbin/start-dfs.sh</p>
+<p>#12.格式化hdfs<br>到/home/hadoop/app/hadoop<br>bin/hdfs namenode -format<br>便于上传文件到hdfs</p>
+<p>#13.hdfs创建文件夹<br>bin/hdfs dfs -mkdir /user<br>bin/hdfs dfs -mkdir /user/hadoop</p>
+<p>bin/hdfs dfs -put etc/hadoop input<br>这一步是将etc/hadoop下的文件放到hdfs的/user/hadoop/input中<br>可以查看，大多数为配置文件<br>bin/hdfs dfs -ls /user/hadoop/input/*</p>
+<p>#14.运行案例<br>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar grep input output ‘dfs[a-z.]+’</p>
+<p>#15.将hdfs中的output下载到linux中<br>bin/hdfs dfs -get output output</p>
+<p>我们可以看一下<br>cd output<br>ll<br>-rw-r–r– 1 hadoop hadoop 281 Nov 22 18:38 part-r-00000<br>-rw-r–r– 1 hadoop hadoop   0 Nov 22 18:38 _SUCCESS</p>
+<p>其中_SUCCESS是一个标识符<br>part-r-00000说明我们的结果为一份</p>
+<p>cat part-r-00000<br>6    dfs.audit.logger<br>4    dfs.class<br>3    dfs.logger<br>3    dfs.server.namenode.<br>2    dfs.audit.log.maxbackupindex<br>2    dfs.period<br>2    dfs.audit.log.maxfilesize<br>1    dfsmetrics.log<br>1    dfsadmin<br>1    dfs.servers<br>1    dfs.replication<br>1    dfs.namenode.secondary.https<br>1    dfs.log<br>1    dfs.file<br>1    dfs.namenode.secondary.http<br>看来我们刚才运行的是一个词频统计的程序</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">田一顷</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/">http://example.com/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">my precious</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/11/24/hadoop-2.6.0-cdh5.16.2%E9%85%8D%E7%BD%AE/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Linux</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/12/Linux%20-%20%E9%A2%98%E7%9B%AE%E5%90%88%E9%9B%86/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux - 题目合集</div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">田一顷</div><div class="author-info__description">田一顷</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/11/24/hadoop-2.6.0-cdh5.16.2%E9%85%8D%E7%BD%AE/" title="Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux"/></a><div class="content"><a class="title" href="/2020/11/24/hadoop-2.6.0-cdh5.16.2%E9%85%8D%E7%BD%AE/" title="Linux">Linux</a><time datetime="2020-11-24T12:30:40.183Z" title="发表于 2020-11-24 20:30:40">2020-11-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/" title="Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux"/></a><div class="content"><a class="title" href="/2020/11/22/Hadoop%E5%AE%89%E8%A3%85/" title="Linux">Linux</a><time datetime="2020-11-22T07:10:20.846Z" title="发表于 2020-11-22 15:10:20">2020-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/11/12/Linux%20-%20%E9%A2%98%E7%9B%AE%E5%90%88%E9%9B%86/" title="Linux - 题目合集"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux - 题目合集"/></a><div class="content"><a class="title" href="/2020/11/12/Linux%20-%20%E9%A2%98%E7%9B%AE%E5%90%88%E9%9B%86/" title="Linux - 题目合集">Linux - 题目合集</a><time datetime="2020-11-12T02:29:58.845Z" title="发表于 2020-11-12 10:29:58">2020-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/11/12/Linux%20-%20%E9%AB%98%E5%8D%B1%E5%91%BD%E4%BB%A4%E3%80%81%E5%9D%91%E5%90%88%E9%9B%86/" title="Linux - 高危命令、坑合集"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux - 高危命令、坑合集"/></a><div class="content"><a class="title" href="/2020/11/12/Linux%20-%20%E9%AB%98%E5%8D%B1%E5%91%BD%E4%BB%A4%E3%80%81%E5%9D%91%E5%90%88%E9%9B%86/" title="Linux - 高危命令、坑合集">Linux - 高危命令、坑合集</a><time datetime="2020-11-12T02:29:40.073Z" title="发表于 2020-11-12 10:29:40">2020-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/11/05/Linux/" title="Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux"/></a><div class="content"><a class="title" href="/2020/11/05/Linux/" title="Linux">Linux</a><time datetime="2020-11-05T09:45:20.825Z" title="发表于 2020-11-05 17:45:20">2020-11-05</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 田一顷</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
