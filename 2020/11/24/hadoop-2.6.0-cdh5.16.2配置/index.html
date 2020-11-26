@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2020-11-24T12:30:40.183Z">
-<meta property="article:modified_time" content="2020-11-24T15:39:14.584Z">
+<meta property="article:modified_time" content="2020-11-26T11:31:22.306Z">
 <meta property="article:author" content="田一顷">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/11/24/hadoop-2.6.0-cdh5.16.2%E9%85%8D%E7%BD%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
@@ -78,7 +78,7 @@ var saveToLocal = {
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2020-11-24 23:39:14'
+  postUpdate: '2020-11-26 19:31:22'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -143,7 +143,7 @@ if (asideStatus !== undefined) {
    } else {
      document.documentElement.classList.remove('hide-aside')
    }
-}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">hadoop-2.6.0-chd5.16.2配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-11-24T12:30:40.183Z" title="发表于 2020-11-24 20:30:40">2020-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-24T15:39:14.584Z" title="更新于 2020-11-24 23:39:14">2020-11-24</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>很多人入门就放弃，大多数是因为部署不成功</p>
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">hadoop-2.6.0-chd5.16.2配置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-11-24T12:30:40.183Z" title="发表于 2020-11-24 20:30:40">2020-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-26T11:31:22.306Z" title="更新于 2020-11-26 19:31:22">2020-11-26</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>很多人入门就放弃，大多数是因为部署不成功</p>
 <p>部署的时候或多或少是有一些问题，找出解决方法并记录是唯一出路</p>
 <h1 id="hadoop部署"><a href="#hadoop部署" class="headerlink" title="hadoop部署"></a>hadoop部署</h1><h2 id="1-1-下载所需要的安装包"><a href="#1-1-下载所需要的安装包" class="headerlink" title="1.1 下载所需要的安装包"></a>1.1 下载所需要的安装包</h2><p>其中包括mysql，jdk，hadoop<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1CLNVnWHb1M9yA-owZe7nsw">https://pan.baidu.com/s/1CLNVnWHb1M9yA-owZe7nsw</a><br>提取码：yuiz<br>复制这段内容后打开百度网盘手机App，操作更方便哦</p>
 <h2 id="1-2-创建hadoop用户"><a href="#1-2-创建hadoop用户" class="headerlink" title="1.2 创建hadoop用户"></a>1.2 创建hadoop用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> useradd hadoop</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> su - hadoop</span></span><br></pre></td></tr></table></figure>
@@ -167,27 +167,23 @@ if (asideStatus !== undefined) {
 <p>ssh yourname date<br>再次数据做double check</p>
 <h2 id="1-10-修改配置文件"><a href="#1-10-修改配置文件" class="headerlink" title="1.10 修改配置文件"></a>1.10 修改配置文件</h2><p>配置namenode进程以precious启动<br>core-site.xml</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/hadoop/app/hadoop/etc/hadoop</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vi core-site.xml</span></span><br></pre></td></tr></table></figure>
-<configuration>
-    <property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://precious:9000</value>
-    </property>
-
 <pre><code>&lt;property&gt;
+    &lt;name&gt;fs.defaultFS&lt;/name&gt;
+    &lt;value&gt;hdfs://precious:9000&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
     &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
     &lt;value&gt;/home/hadoop/tmp/&lt;/value&gt;
 &lt;/property&gt;</code></pre>
-</configuration>
-
 <p>配置secondary namenode进程以precious启动<br>hdfs-site.xml</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi hdfs-site.xml</span></span><br></pre></td></tr></table></figure>
-<configuration>
-    <property>
-        <name>dfs.replication</name>
-        <value>1</value>
-    </property>
-
 <pre><code>&lt;property&gt;
+    &lt;name&gt;dfs.replication&lt;/name&gt;
+    &lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
     &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
     &lt;value&gt;precious:9868&lt;/value&gt;
 &lt;/property&gt;
@@ -196,8 +192,6 @@ if (asideStatus !== undefined) {
     &lt;name&gt;dfs.namenode.secondary.https-address&lt;/name&gt;
     &lt;value&gt;precious:9869&lt;/value&gt;
 &lt;/property&gt;</code></pre>
-</configuration>
-
 <p>配置datanode进程以precious启动<br>slaves</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi slaves</span></span><br></pre></td></tr></table></figure>
 <p>precious</p>
@@ -220,16 +214,11 @@ if (asideStatus !== undefined) {
 <p>6    dfs.audit.logger<br>4    dfs.class<br>3    dfs.logger<br>3    dfs.server.namenode.<br>2    dfs.audit.log.maxbackupindex<br>2    dfs.period<br>2    dfs.audit.log.maxfilesize<br>1    dfsmetrics.log<br>1    dfsadmin<br>1    dfs.servers<br>1    dfs.replication<br>1    dfs.namenode.secondary.https<br>1    dfs.log<br>1    dfs.file<br>1    dfs.namenode.secondary.http<br>看来正常运行了一个词频统计的程序</p>
 <h1 id="yarn部署"><a href="#yarn部署" class="headerlink" title="yarn部署"></a>yarn部署</h1><h2 id="2-1-修改配置文件"><a href="#2-1-修改配置文件" class="headerlink" title="2.1 修改配置文件"></a>2.1 修改配置文件</h2><h3 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h3><p>由于CDH没有默认的mapred-site.xml文件，只有一个mapred-site.xml.template<br>所以需要复制一份出来，并将此文件改名</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> su - hadoop</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> app/hadoop/etc/hadoop</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cp mapred-site.xml.template mapred-site.xml</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vi mapred-site.xml</span></span><br></pre></td></tr></table></figure>
-<configuration>
-    <property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn</value>
-    </property>
-</configuration>
-
-
+<pre><code>&lt;property&gt;
+    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+    &lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt;</code></pre>
 <h3 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi yarn-site.xml</span></span><br></pre></td></tr></table></figure>
-<configuration>
 <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
@@ -239,7 +228,6 @@ if (asideStatus !== undefined) {
         <name>yarn.resourcemanager.webapp.address</name>
         <value>${yarn.resourcemanager.hostname}:自己设置一个端口号</value>
 </property>
-</configuration>
 
 <p>其中需要注意的是，yarn.resourcemanager.webapp.address<br>由于yarn的默认开放端口是8088，其REST API允许用户直接通过API进行相关的应用创建、任务提交等操作，如果配置不当，<br>REST API将开放在公网导致未授权访问的问题，那么任何黑客就可以利用其远程命令执行，从而进行挖矿等行为。</p>
 <p>所以需要修改yarn的默认端口，防止被挖矿(一般使用top命令发现CPU占用率超过100，有可能是被挖矿)<br>如果使用的是云主机，还需要设置云主机的安全组，限制开放的端口(在自己的买的网站上可以设置，一般在控制台中)</p>
