@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spark - 安装与简介 | my precious</title><meta name="author" content="田一顷"><meta name="copyright" content="田一顷"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="安装下载地址由于服务器的hadoop版本是 hadoop-2.6.0-cdh5.16.2所以需要用到spark2.xhttps:&#x2F;&#x2F;www.apache.org&#x2F;dyn&#x2F;closer.lua&#x2F;spark&#x2F;spark-3.1.1&#x2F;spark-3.1.1-bin-hadoop2.7.tgz 安装上传至服务器，解压，软连接，环境变量 解压1$ tar -zxvf spark-3.1.1-bin-hado">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Spark - 安装与简介">
+<meta property="og:url" content="https://github.com/preciousmaker/preciousmaker.github.io/Spark%20-%20%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F.html">
+<meta property="og:site_name" content="my precious">
+<meta property="og:description" content="安装下载地址由于服务器的hadoop版本是 hadoop-2.6.0-cdh5.16.2所以需要用到spark2.xhttps:&#x2F;&#x2F;www.apache.org&#x2F;dyn&#x2F;closer.lua&#x2F;spark&#x2F;spark-3.1.1&#x2F;spark-3.1.1-bin-hadoop2.7.tgz 安装上传至服务器，解压，软连接，环境变量 解压1$ tar -zxvf spark-3.1.1-bin-hado">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-30T12:01:33.077Z">
+<meta property="article:modified_time" content="2021-03-30T04:01:48.754Z">
+<meta property="article:author" content="田一顷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/preciousmaker/preciousmaker.github.io/Spark%20-%20%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-03-30 12:01:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/header.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">38</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="not-index-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="page-site-info"><h1 id="site-title">Spark - 安装与简介</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>由于服务器的hadoop版本是 hadoop-2.6.0-cdh5.16.2<br>所以需要用到spark2.x<br><a target="_blank" rel="noopener" href="https://www.apache.org/dyn/closer.lua/spark/spark-3.1.1/spark-3.1.1-bin-hadoop2.7.tgz">https://www.apache.org/dyn/closer.lua/spark/spark-3.1.1/spark-3.1.1-bin-hadoop2.7.tgz</a></p>
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><p>上传至服务器，解压，软连接，环境变量</p>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf spark-3.1.1-bin-hadoop2.7.tgz -C ../app/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="软连接"><a href="#软连接" class="headerlink" title="软连接"></a>软连接</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ln -s spark-3.1.1-bin-hadoop2.7/ spark</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi .bashrc</span></span><br><span class="line"></span><br><span class="line">export SPARK_HOME=/home/hadoop/app/spark</span><br><span class="line">export PATH=$&#123;SPARK_HOME&#125;/bin:$PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">source</span> .bashrc</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/hadoop/app/spark/bin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> spark-shell</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.ibb.co/CKFTsXm/spark-shell.png" alt="spark-shell"></p>
+<p>出现这个表示成功</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>MapReduce存在的一些局限性</p>
+<ol>
+<li>   从编程角度来看，不方便</li>
+<li>   一般来讲 map ==&gt; 磁盘，reduce ==&gt; HDFS；但如果一个作业由多个MR作业构成<br>例如 : A ==&gt; B ==&gt; C ==&gt; D，A的输出交给B，B的输出交给C等等，就会涉及磁盘IO，网络IO以及序列化等问题</li>
+<li>   Map Task和Reduce Task都是进程级别，需要启动JVM，先忽略JVM复用，启动和销毁有一定的开销</li>
+<li>   MR不能合理充分的使用内存</li>
+<li>   map的结果是会自动排序，耗时</li>
+<li>   只能处理离线批处理，不能处理实时数据</li>
+</ol>
+<p>批处理、离线处理：MR Hive Pig<br>流式、实时处理：Storm SS SSS Flink</p>
+<p>流批一体：Spark Flink<br>可以以集群的方式部署<br>也可以跑在YARN上</p>
+<p><img src="https://i.ibb.co/GnCHTBJ/spark.png" alt="spark"></p>
+<p>只需要下载一个Spark就可以使用<br>Spark SQL<br>Spark Streaming<br>MLlib(机器学习)<br>GraphX(图形计算)<br>这些底层都是Spark Core</p>
+<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><p>官方介绍为快如闪电的统一分析引擎<br><strong>内存计算快于磁盘计算</strong>，并且Spark启动是基于<strong>线程</strong><br>有DAG，A ==&gt; B ==&gt; C ==&gt; D 就不用每一步都落地，将各个之间打通，形成pipeline<br><strong>不过不管是Spark还是MR，shuffle都是落地到磁盘的</strong></p>
+<h2 id="易用"><a href="#易用" class="headerlink" title="易用"></a>易用</h2><p>相同的需求，spark的代码量和MR不是一个数量级<br>并且支持Java, Scala, Python, R, and SQL.<br>还提供了80+个高阶函数(算子)</p>
+<h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><p>可以运行在Hadoop(运行在YARN，读取HDFS数据), Apache Mesos, Kubernetes, standalone, 或者是cloud。<br>并且可以访问(读写)各种数据源。</p>
+<h2 id="历程"><a href="#历程" class="headerlink" title="历程"></a>历程</h2><p>2009 -&gt; AMP Lab<br>2010 -&gt; 开源<br>201306 -&gt; 孵化<br>201402 -&gt; 成为顶级项目<br>201405 -&gt; 1.0<br>201607 -&gt; 2.0<br>202006 -&gt; 3.0<br>202103 -&gt; 3.1.1</p>
+<p>但不是说3.0发布后就不会更新2.X版本，2.X的一些问题也还会继续修复更新</p>
+<p>x.y.z<br>x : Major version(change APIs)<br>y : Minor version(add APIs/features)<br>z : Patch version(bug fixes)<br>能选择最新的尽可能选最新的<br>并且尽量选择z最大的</p>
+</div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/header.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">田一顷</div><div class="author-info__description">田一顷</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">38</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" href="https://github.com/preciousmaker/preciousmaker.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/04/10/ZK%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" title="ZK选举机制"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ZK选举机制"/></a><div class="content"><a class="title" href="/2021/04/10/ZK%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" title="ZK选举机制">ZK选举机制</a><time datetime="2021-04-10T07:22:08.144Z" title="发表于 2021-04-10 15:22:08">2021-04-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Hive%20-%20UDF/" title="Hive - UDF"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hive - UDF"/></a><div class="content"><a class="title" href="/2021/03/11/Hive%20-%20UDF/" title="Hive - UDF">Hive - UDF</a><time datetime="2021-03-11T15:02:39.961Z" title="发表于 2021-03-11 23:02:39">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/11/Hive%20-%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/" title="Hive - 源码编译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hive - 源码编译"/></a><div class="content"><a class="title" href="/2021/03/11/Hive%20-%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/" title="Hive - 源码编译">Hive - 源码编译</a><time datetime="2021-03-11T10:56:17.733Z" title="发表于 2021-03-11 18:56:17">2021-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/08/MapReduce%E7%BC%96%E7%A8%8B%20-%20%E7%B1%BBSQL%E6%93%8D%E4%BD%9C/" title="MapReduce编程 - 类SQL操作"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MapReduce编程 - 类SQL操作"/></a><div class="content"><a class="title" href="/2021/03/08/MapReduce%E7%BC%96%E7%A8%8B%20-%20%E7%B1%BBSQL%E6%93%8D%E4%BD%9C/" title="MapReduce编程 - 类SQL操作">MapReduce编程 - 类SQL操作</a><time datetime="2021-03-08T04:39:16.257Z" title="发表于 2021-03-08 12:39:16">2021-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/06/MapReduce%E7%BC%96%E7%A8%8B%20-%20Sort/" title="MapReduce编程 - Sort"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MapReduce编程 - Sort"/></a><div class="content"><a class="title" href="/2021/03/06/MapReduce%E7%BC%96%E7%A8%8B%20-%20Sort/" title="MapReduce编程 - Sort">MapReduce编程 - Sort</a><time datetime="2021-03-06T07:52:29.011Z" title="发表于 2021-03-06 15:52:29">2021-03-06</time></div></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HDFS/"><span class="card-category-list-name">HDFS</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Hive/"><span class="card-category-list-name">Hive</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LeetCode/"><span class="card-category-list-name">LeetCode</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MapReduce/"><span class="card-category-list-name">MapReduce</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MySQL/"><span class="card-category-list-name">MySQL</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Scala/"><span class="card-category-list-name">Scala</span><span class="card-category-list-count">3</span></a></li>
+            <li class="card-category-list-item more is-center"><a class="card-category-list-link-more" href="/categories/">
+                <span>查看更多</span><i class="fas fa-angle-right"></i></a></li>
+            </ul></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/04/"><span class="card-archive-list-date">四月 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/03/"><span class="card-archive-list-date">三月 2021</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/02/"><span class="card-archive-list-date">二月 2021</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">一月 2021</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">十二月 2020</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">6</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">38</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-04-10T07:22:40.432Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 田一顷</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
