@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>my precious | my precious</title><meta name="author" content="田一顷"><meta name="copyright" content="田一顷"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="title：Spark - 性能优化(一) 开发调优category：Spark  Spark性能优化的第一步，就是要在开发Spark作业的过程中注意和应用一些性能优化的基本原则。包括：RDD lineage(血统)设计、算子的合理使用、特殊操作的优化等。在开发过程中，时时刻刻都应该注意以上原则，并将这些原则根据具体的业务以及实际的应用场景，灵活地运用到自己的Spark作业中。 原则一 : 避免">
+<meta property="og:type" content="article">
+<meta property="og:title" content="my precious">
+<meta property="og:url" content="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/index.html">
+<meta property="og:site_name" content="my precious">
+<meta property="og:description" content="title：Spark - 性能优化(一) 开发调优category：Spark  Spark性能优化的第一步，就是要在开发Spark作业的过程中注意和应用一些性能优化的基本原则。包括：RDD lineage(血统)设计、算子的合理使用、特殊操作的优化等。在开发过程中，时时刻刻都应该注意以上原则，并将这些原则根据具体的业务以及实际的应用场景，灵活地运用到自己的Spark作业中。 原则一 : 避免">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-11T10:22:07.860Z">
+<meta property="article:modified_time" content="2021-08-10T10:34:18.258Z">
+<meta property="article:author" content="田一顷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-10 18:34:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/header.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-11T10:22:07.860Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-10T10:34:18.258Z" title="更新于 2021-08-10 18:34:18">2021-08-10</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<p>title：Spark - 性能优化(一) 开发调优<br>category：Spark</p>
+<hr>
+<p>Spark性能优化的第一步，就是要在开发Spark作业的过程中注意和应用一些性能优化的基本原则。<br>包括：RDD lineage(血统)设计、算子的合理使用、特殊操作的优化等。<br>在开发过程中，时时刻刻都应该注意以上原则，并将这些原则根据具体的业务以及实际的应用场景，灵活地运用到自己的Spark作业中。</p>
+<h1 id="原则一-避免创建重复的RDD"><a href="#原则一-避免创建重复的RDD" class="headerlink" title="原则一 : 避免创建重复的RDD"></a>原则一 : 避免创建重复的RDD</h1><p>我们在开发过程中要注意：对于同一份数据，只应该创建一个RDD，不能创建多个RDD来代表同一份数据。</p>
+<p>比如，针对同一个HDFS文件，执行了多次textFile方法，创建了多个RDD出来，然后分别对每个RDD都执行了一个算子操作，<br>那么加载HDFS文件以及创建RDD的性能开销，很明显是白白浪费掉的。</p>
+<h1 id="原则二-尽可能复用同一个RDD"><a href="#原则二-尽可能复用同一个RDD" class="headerlink" title="原则二 : 尽可能复用同一个RDD"></a>原则二 : 尽可能复用同一个RDD</h1><p>除了要避免在开发过程中对一份完全相同的数据创建多个RDD之外，在对不同的数据执行算子操作时还要尽可能地复用一个RDD。</p>
+<p>比如，有一个RDD的数据格式是KV类型的，另一个是单value类型的，并且这两个RDD的value是完全一样的。<br>那么我们就可以只使用KV类型的那个RDD，因为其中已经包含了另一个的数据。<br>对于类似这种多个RDD的数据有重叠或者包含的情况，我们应该尽量复用一个RDD，这样可以尽可能地减少RDD的数量，从而尽可能减少算子执行的次数。</p>
+<h1 id="原则三-对多次使用的RDD进行持久化"><a href="#原则三-对多次使用的RDD进行持久化" class="headerlink" title="原则三 : 对多次使用的RDD进行持久化"></a>原则三 : 对多次使用的RDD进行持久化</h1><p>在原则一二的基础上，还可以优化，即保证对一个RDD执行多次算子操作时，这个RDD本身仅仅被计算一次。<br>Spark中对于一个RDD执行多次算子的默认原理是这样的：每次你对一个RDD执行一个算子操作时，都会<strong>重新从源头处计算一遍</strong>，计算出那个RDD来，然后再对这个RDD执行你的算子操作。这种方式的性能是很差的。</p>
+<p>因此建议对多次使用的RDD进行持久化。此时Spark就会根据你的持久化策略，将RDD中的数据保存到内存或者磁盘中。<br>以后每次对这个RDD进行算子操作时，都会直接从内存或磁盘中提取持久化的RDD数据，然后执行算子，而不会从源头处重新计算一遍这个RDD，再执行算子操作。</p>
+<h2 id="Spark的持久化级别"><a href="#Spark的持久化级别" class="headerlink" title="Spark的持久化级别"></a>Spark的持久化级别</h2><table>
+<thead>
+<tr>
+<th>持久化级别</th>
+<th>含义解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MEMORY_ONLY</td>
+<td>使用未序列化的Java对象格式，将数据保存在内存中。如果内存不够存放所有的数据，则数据可能就不会进行持久化。那么下次对这个RDD执行算子操作时，那些没有被持久化的数据，需要从源头处重新计算一遍。这是默认的持久化策略，使用cache()方法时，实际就是使用的这种持久化策略。</td>
+</tr>
+<tr>
+<td>MEMORY_AND_DISK</td>
+<td>使用未序列化的Java对象格式，优先尝试将数据保存在内存中。如果内存不够存放所有的数据，会将数据写入磁盘文件中，下次对这个RDD执行算子时，持久化在磁盘文件中的数据会被读取出来使用。</td>
+</tr>
+<tr>
+<td>MEMORY_ONLY_SER</td>
+<td>基本含义同MEMORY_ONLY。唯一的区别是，会将RDD中的数据进行序列化，RDD的每个partition会被序列化成一个字节数组。这种方式更加节省内存，从而可以避免持久化的数据占用过多内存导致频繁GC。</td>
+</tr>
+<tr>
+<td>MEMORY_AND_DISK_SER</td>
+<td>基本含义同MEMORY_AND_DISK。唯一的区别是，会将RDD中的数据进行序列化，RDD的每个partition会被序列化成一个字节数组。这种方式更加节省内存，从而可以避免持久化的数据占用过多内存导致频繁GC。</td>
+</tr>
+<tr>
+<td>DISK_ONLY</td>
+<td>使用未序列化的Java对象格式，将数据全部写入磁盘文件中。</td>
+</tr>
+<tr>
+<td>MEMORY_ONLY_2，MEMORY_AND_DISK_2</td>
+<td>对于上述任意一种持久化策略，如果加上后缀_2，代表的是将每个持久化的数据，都复制一份副本，并将副本保存到其他节点上。这种基于副本的持久化机制主要用于进行容错。假如某个节点挂掉，节点的内存或磁盘中的持久化数据丢失了，那么后续对RDD计算时还可以使用该数据在其他节点上的副本。如果没有副本的话，就只能将这些数据从源头处重新计算一遍了。</td>
+</tr>
+</tbody></table>
+<h2 id="如何选择一种最合适的持久化策略"><a href="#如何选择一种最合适的持久化策略" class="headerlink" title="如何选择一种最合适的持久化策略"></a>如何选择一种最合适的持久化策略</h2><ul>
+<li><p>默认情况下，性能最高的当然是<code>MEMORY_ONLY</code>，但前提是你的<strong>内存必须足够足够大</strong>，可以绰绰有余地存放下整个RDD的所有数据。因为不进行序列化与反序列化操作，就避免了这部分的性能开销；对这个RDD的后续算子操作，都是基于纯内存中的数据的操作，不需要从磁盘文件中读取数据，性能也很高；而且不需要复制一份数据副本，并远程传送到其他节点上。但是这里必须要注意的是，在实际的生产环境中，恐怕能够直接用这种策略的场景还是有限的，如果RDD中数据比较多时（比如几十亿），<strong>直接用这种持久化级别，会导致JVM的OOM内存溢出异常</strong>。</p>
+</li>
+<li><p>如果使用MEMORY_ONLY级别时发生了内存溢出，那么建议尝试使用<code>MEMORY_ONLY_SER</code>级别。该级别会将RDD数据序列化后再保存在内存中，此时每个partition仅仅是一个字节数组而已，大大减少了对象数量，并降低了内存占用。++这种级别比MEMORY_ONLY多出来的性能开销，主要就是序列化与反序列化的开销。++但是后续算子可以基于纯内存进行操作，因此性能总体还是比较高的。此外，可能发生的问题同上，如果RDD中的数据量过多的话，还是<strong>可能会导致OOM内存溢出的异常</strong>。</p>
+</li>
+<li><p>如果纯内存的级别都无法使用，那么建议使用<code>MEMORY_AND_DISK_SER</code>策略，而不是<code>MEMORY_AND_DISK</code>策略。因为既然到了这一步，就说明RDD的数据量很大，内存无法完全放下。序列化后的数据比较少，可以节省内存和磁盘的空间开销。同时该策略会优先尽量尝试将数据缓存在内存中，内存缓存不下才会写入磁盘。</p>
+</li>
+<li><p>通常不建议使用DISK_ONLY和后缀为_2的级别：因为完全基于磁盘文件进行数据的读写，会导致性能急剧降低，有时还不如重新计算一次所有RDD。后缀为_2的级别，必须将所有数据都复制一份副本，并发送到其他节点上，数据复制以及网络传输会导致较大的性能开销，++除非是要求作业的高可用性，否则<strong>不建议使用</strong>++。</p>
+</li>
+</ul>
+<h1 id="原则四-尽量避免使用shuffle类算子"><a href="#原则四-尽量避免使用shuffle类算子" class="headerlink" title="原则四 : 尽量避免使用shuffle类算子"></a>原则四 : 尽量避免使用shuffle类算子</h1><p>Spark作业运行过程中，最消耗性能的地方就是shuffle过程。<br>shuffle过程，简单来说，就是将分布在集群中多个节点上的同一个key，拉取到同一个节点上，进行聚合或join等操作。比如reduceByKey、join等算子，都会触发shuffle操作。</p>
+<p>shuffle过程中，各个节点上的相同key都会先写入本地磁盘文件中，然后其他节点需要通过网络传输拉取各个节点上的磁盘文件中的相同key。<br>而且相同key都拉取到同一个节点进行聚合操作时，还有可能会因为一个节点上处理的key过多，导致内存不够存放，进而溢写到磁盘文件中。<br>因此在shuffle过程中，可能会发生大量的磁盘文件读写的IO操作，以及数据的网络传输操作。<br><strong>磁盘IO</strong>和<strong>网络数据传输</strong>也是shuffle性能较差的主要原因。</p>
+<p>因此在我们的开发过程中，能避免则尽可能避免使用reduceByKey、join、distinct、repartition等会进行shuffle的算子，尽量使用map类的非shuffle算子。<br>这样的话，没有shuffle操作或者仅有较少shuffle操作的Spark作业，可以大大减少性能开销。</p>
+<h2 id="Broadcast与map进行join代码示例"><a href="#Broadcast与map进行join代码示例" class="headerlink" title="Broadcast与map进行join代码示例"></a>Broadcast与map进行join代码示例</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传统的join操作会导致shuffle操作。</span></span><br><span class="line"><span class="comment">// 因为两个RDD中，相同的key都需要通过网络拉取到一个节点上，由一个task进行join操作。</span></span><br><span class="line"><span class="keyword">val</span> rdd3 = rdd1.join(rdd2)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Broadcast+map的join操作，不会导致shuffle操作。</span></span><br><span class="line"><span class="comment">// 使用Broadcast将一个数据量较小的RDD作为广播变量。</span></span><br><span class="line"><span class="keyword">val</span> rdd2Data = rdd2.collect()</span><br><span class="line"><span class="keyword">val</span> rdd2DataBroadcast = sc.broadcast(rdd2Data)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在rdd1.map算子中，可以从rdd2DataBroadcast中，获取rdd2的所有数据。</span></span><br><span class="line"><span class="comment">// 然后进行遍历，如果发现rdd2中某条数据的key与rdd1的当前数据的key是相同的，那么就判定可以进行join。</span></span><br><span class="line"><span class="comment">// 此时就可以根据自己需要的方式，将rdd1当前数据与rdd2中可以连接的数据，拼接在一起（String或Tuple）。</span></span><br><span class="line"><span class="keyword">val</span> rdd3 = rdd1.map(rdd2DataBroadcast...)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，以上操作，建议仅仅在rdd2的数据量比较少（比如几百M，或者一两G）的情况下使用。</span></span><br><span class="line"><span class="comment">// 因为每个Executor的内存中，都会驻留一份rdd2的全量数据。</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="原则五-使用map-side预聚合的shuffle操作"><a href="#原则五-使用map-side预聚合的shuffle操作" class="headerlink" title="原则五 : 使用map-side预聚合的shuffle操作"></a>原则五 : 使用map-side预聚合的shuffle操作</h1><p>如果因为业务需要，一定要使用shuffle操作，无法用map类的算子来替代，那么尽量使用可以map-side预聚合的算子。</p>
+<p>所谓的map-side预聚合，说的是在每个节点本地对相同的key进行一次聚合操作，类似于MapReduce中的本地combiner。<br>map-side预聚合之后，每个节点本地就只会有一条相同的key，因为多条相同的key都被聚合起来了。其他节点在拉取所有节点上的相同key时，就会大大减少需要拉取的数据数量，从而也就减少了磁盘IO以及网络传输开销。<br>通常来说，在可能的情况下，建议使用reduceByKey或者aggregateByKey算子来替代掉groupByKey算子。<br>因为reduceByKey和aggregateByKey算子都会使用用户自定义的函数对每个节点本地的相同key进行预聚合。而groupByKey算子是不会进行预聚合的，全量的数据会在集群的各个节点之间分发和传输，性能相对来说比较差。</p>
+<h1 id="原则六-使用高性能的算子"><a href="#原则六-使用高性能的算子" class="headerlink" title="原则六 : 使用高性能的算子"></a>原则六 : 使用高性能的算子</h1><p>除了shuffle相关的算子有优化原则之外，其他的算子也都有着相应的优化原则。</p>
+<h2 id="使用reduceByKey-aggregateByKey替代groupByKey"><a href="#使用reduceByKey-aggregateByKey替代groupByKey" class="headerlink" title="使用reduceByKey/aggregateByKey替代groupByKey"></a>使用reduceByKey/aggregateByKey替代groupByKey</h2><p>参考原则五</p>
+<h2 id="使用mapPartitions替代普通map"><a href="#使用mapPartitions替代普通map" class="headerlink" title="使用mapPartitions替代普通map"></a>使用mapPartitions替代普通map</h2><p>mapPartitions类的算子，一次函数调用会处理一个partition所有的数据，而不是一次函数调用处理一条，性能相对来说会高一些。<br>但是有的时候，使用mapPartitions会出现OOM（内存溢出）的问题。因为单次函数调用就要处理掉一个partition所有的数据，如果内存不够，垃圾回收时是无法回收掉太多对象的，很可能出现OOM异常。所以使用这类操作时要慎重！</p>
+<h2 id="使用foreachPartitions替代foreach"><a href="#使用foreachPartitions替代foreach" class="headerlink" title="使用foreachPartitions替代foreach"></a>使用foreachPartitions替代foreach</h2><p>原理类似于“使用mapPartitions替代map”，也是一次函数调用处理一个partition的所有数据，而不是一次函数调用处理一条数据。在实践中发现，foreachPartitions类的算子，对性能的提升还是很有帮助的。<br>比如在foreach函数中，将RDD中所有数据写MySQL，那么如果是普通的foreach算子，就会一条数据一条数据地写，每次函数调用可能就会创建一个数据库连接，此时就势必会频繁地创建和销毁数据库连接，性能是非常低下；<br>但是如果用foreachPartitions算子一次性处理一个partition的数据，那么对于每个partition，只要创建一个数据库连接即可，然后执行批量插入操作，此时性能是比较高的。实践中发现，对于1万条左右的数据量写MySQL，性能可以提升30%以上。</p>
+<h2 id="使用filter之后进行coalesce操作"><a href="#使用filter之后进行coalesce操作" class="headerlink" title="使用filter之后进行coalesce操作"></a>使用filter之后进行coalesce操作</h2><p>通常对一个RDD执行filter算子过滤掉RDD中较多数据后（比如30%以上的数据），建议使用coalesce算子，手动减少RDD的partition数量，将RDD中的数据压缩到更少的partition中去。<br>因为filter之后，RDD的每个partition中都会有很多数据被过滤掉，此时如果照常进行后续的计算，其实每个task处理的partition中的数据量并不是很多，有一点资源浪费，而且此时处理的task越多，可能速度反而越慢。<br>因此用coalesce减少partition数量，将RDD中的数据压缩到更少的partition之后，只要使用更少的task即可处理完所有的partition。在某些场景下，对于性能的提升会有一定的帮助。</p>
+<h2 id="使用repartitionAndSortWithinPartitions替代repartition与sort类操作"><a href="#使用repartitionAndSortWithinPartitions替代repartition与sort类操作" class="headerlink" title="使用repartitionAndSortWithinPartitions替代repartition与sort类操作"></a>使用repartitionAndSortWithinPartitions替代repartition与sort类操作</h2><p>repartitionAndSortWithinPartitions是Spark官网推荐的一个算子。<br>官方建议，如果需要在repartition重分区之后，还要进行排序，建议直接使用repartitionAndSortWithinPartitions算子。因为该算子可以一边进行重分区的shuffle操作，一边进行排序。<br>shuffle与sort两个操作同时进行，比先shuffle再sort来说，性能可能是要高的。</p>
+<h1 id="原则七-Broadcast-广播大变量"><a href="#原则七-Broadcast-广播大变量" class="headerlink" title="原则七 : Broadcast 广播大变量"></a>原则七 : Broadcast 广播大变量</h1><p>有时在开发过程中，会遇到需要在算子函数中使用外部变量的场景（尤其是大变量，比如100M以上的大集合），那么此时就应该使用Spark的广播（Broadcast）功能来提升性能。</p>
+<p>在算子函数中使用到外部变量时，默认情况下，Spark会将该变量复制多个副本，通过网络传输到task中，此时每个task都有一个变量副本。如果变量本身比较大的话（比如100M，甚至1G），那么大量的变量副本在网络中传输的性能开销，以及在各个节点的Executor中占用过多内存导致的频繁GC，都会极大地影响性能。</p>
+<p>因此对于上述情况，如果使用的外部变量比较大，建议使用Spark的广播功能，对该变量进行广播。<br>广播后的变量，会保证每个Executor的内存中，只驻留一份变量副本，而Executor中的task执行时共享该Executor中的那份变量副本。<br>这样的话，可以大大减少变量副本的数量，从而减少网络传输的性能开销，并减少对Executor内存的占用开销，降低GC的频率。</p>
+<p><a target="_blank" rel="noopener" href="https://preciousmaker.github.io/2021/07/21/Spark%20-%20%E8%AE%A1%E6%95%B0%E5%99%A8%E5%92%8C%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/">Spark - 计数器和广播变量</a></p>
+<h1 id="原则八-使用Kryo优化序列化性能"><a href="#原则八-使用Kryo优化序列化性能" class="headerlink" title="原则八 : 使用Kryo优化序列化性能"></a>原则八 : 使用Kryo优化序列化性能</h1><p>在Spark中，主要有三个地方涉及到了序列化：</p>
+<ul>
+<li>在算子函数中使用到外部变量时，该变量会被序列化后进行网络传输（见“原则七 : Broadcast 广播大变量”中的讲解）。</li>
+<li>将自定义的类型作为RDD的泛型类型时（比如JavaRDD，Student是自定义类型），所有自定义类型对象，都会进行序列化。因此这种情况下，也要求自定义的类必须实现Serializable接口。</li>
+<li>使用可序列化的持久化策略时（比如MEMORY_ONLY_SER），Spark会将RDD中的每个partition都序列化成一个大的字节数组。</li>
+</ul>
+<p>对于这三种出现序列化的地方，我们都可以通过使用Kryo序列化类库，来优化序列化和反序列化的性能。<br>Spark默认使用的是Java的序列化机制，也就是ObjectOutputStream/ObjectInputStream API来进行序列化和反序列化。<a target="_blank" rel="noopener" href="https://preciousmaker.github.io/2021/03/01/MapReduce%E7%BC%96%E7%A8%8B%20-%20%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">MapReduce编程 - 序列化及其应用</a><br>但是Spark同时支持使用Kryo序列化库，Kryo序列化类库的性能比Java序列化类库的性能要高很多。官方介绍，Kryo序列化机制比Java序列化机制，性能高10倍左右。<br>Spark之所以默认没有使用Kryo作为序列化类库，是因为Kryo要求最好要注册所有需要进行序列化的自定义类型，因此对于开发者来说，这种方式比较麻烦。</p>
+<h2 id="kryo序列化示例"><a href="#kryo序列化示例" class="headerlink" title="kryo序列化示例"></a>kryo序列化示例</h2><p>只要设置序列化类，再注册要序列化的自定义类型即可(比如算子函数中使用到的外部变量类型、作为RDD泛型类型的自定义类型等)</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建SparkConf对象。</span></span><br><span class="line"><span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setMaster(...).setAppName(...)</span><br><span class="line"><span class="comment">// 设置序列化器为KryoSerializer。</span></span><br><span class="line">conf.set(<span class="string">&quot;spark.serializer&quot;</span>, <span class="string">&quot;org.apache.spark.serializer.KryoSerializer&quot;</span>)</span><br><span class="line"><span class="comment">// 注册要序列化的自定义类型。</span></span><br><span class="line">conf.registerKryoClasses(<span class="type">Array</span>(classOf[<span class="type">MyClass1</span>], classOf[<span class="type">MyClass2</span>]))</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="原则九-优化数据结构"><a href="#原则九-优化数据结构" class="headerlink" title="原则九 : 优化数据结构"></a>原则九 : 优化数据结构</h1><p>Java中，有三种类型比较耗费内存：</p>
+<ul>
+<li>对象，每个Java对象都有对象头、引用等额外的信息，因此比较占用内存空间。</li>
+<li>字符串，每个字符串内部都有一个字符数组以及长度等额外信息。</li>
+<li>集合类型，比如HashMap、LinkedList等，因为集合类型内部通常会使用一些内部类来封装集合元素，比如Map.Entry。</li>
+</ul>
+<p>因此Spark官方建议，在Spark编码实现中，特别是对于算子函数中的代码，尽量不要使用上述三种数据结构。<br>尽量使用<strong>字符串替代对象，使用原始类型（比如Int、Long）替代字符串，使用数组替代集合类型</strong>，这样尽可能地减少内存占用，从而降低GC频率，提升性能。</p>
+<p>但是实践中发现，要做到该原则其实并不容易，因为我们同时要考虑到代码的可维护性。<br>如果一个代码中，完全没有任何对象抽象，全部是字符串拼接的方式，那么对于后续的代码维护和修改，无疑是一场巨大的灾难。<br>同理，如果所有操作都基于数组实现，而不使用HashMap、LinkedList等集合类型，那么对于我们的编码难度以及代码可维护性，也是一个极大的挑战。<br>因此建议，在可能以及合适的情况下，使用占用内存较少的数据结构，但是前提是要保证代码的可维护性。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">田一顷</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/">https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://github.com/preciousmaker/preciousmaker.github.io" target="_blank">my precious</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2021/07/27/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spark - 自定义排序</div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/header.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">田一顷</div><div class="author-info__description">田一顷</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" href="https://github.com/preciousmaker/preciousmaker.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%B8%80-%E9%81%BF%E5%85%8D%E5%88%9B%E5%BB%BA%E9%87%8D%E5%A4%8D%E7%9A%84RDD"><span class="toc-number">1.</span> <span class="toc-text">原则一 : 避免创建重复的RDD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%BA%8C-%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%A4%8D%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AARDD"><span class="toc-number">2.</span> <span class="toc-text">原则二 : 尽可能复用同一个RDD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%B8%89-%E5%AF%B9%E5%A4%9A%E6%AC%A1%E4%BD%BF%E7%94%A8%E7%9A%84RDD%E8%BF%9B%E8%A1%8C%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">原则三 : 对多次使用的RDD进行持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E7%BA%A7%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">Spark的持久化级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E4%B8%80%E7%A7%8D%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">3.2.</span> <span class="toc-text">如何选择一种最合适的持久化策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E5%9B%9B-%E5%B0%BD%E9%87%8F%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8shuffle%E7%B1%BB%E7%AE%97%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">原则四 : 尽量避免使用shuffle类算子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Broadcast%E4%B8%8Emap%E8%BF%9B%E8%A1%8Cjoin%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.1.</span> <span class="toc-text">Broadcast与map进行join代码示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%BA%94-%E4%BD%BF%E7%94%A8map-side%E9%A2%84%E8%81%9A%E5%90%88%E7%9A%84shuffle%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">原则五 : 使用map-side预聚合的shuffle操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E5%85%AD-%E4%BD%BF%E7%94%A8%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%AE%97%E5%AD%90"><span class="toc-number">6.</span> <span class="toc-text">原则六 : 使用高性能的算子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8reduceByKey-aggregateByKey%E6%9B%BF%E4%BB%A3groupByKey"><span class="toc-number">6.1.</span> <span class="toc-text">使用reduceByKey&#x2F;aggregateByKey替代groupByKey</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mapPartitions%E6%9B%BF%E4%BB%A3%E6%99%AE%E9%80%9Amap"><span class="toc-number">6.2.</span> <span class="toc-text">使用mapPartitions替代普通map</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8foreachPartitions%E6%9B%BF%E4%BB%A3foreach"><span class="toc-number">6.3.</span> <span class="toc-text">使用foreachPartitions替代foreach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8filter%E4%B9%8B%E5%90%8E%E8%BF%9B%E8%A1%8Ccoalesce%E6%93%8D%E4%BD%9C"><span class="toc-number">6.4.</span> <span class="toc-text">使用filter之后进行coalesce操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8repartitionAndSortWithinPartitions%E6%9B%BF%E4%BB%A3repartition%E4%B8%8Esort%E7%B1%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">6.5.</span> <span class="toc-text">使用repartitionAndSortWithinPartitions替代repartition与sort类操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%B8%83-Broadcast-%E5%B9%BF%E6%92%AD%E5%A4%A7%E5%8F%98%E9%87%8F"><span class="toc-number">7.</span> <span class="toc-text">原则七 : Broadcast 广播大变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E5%85%AB-%E4%BD%BF%E7%94%A8Kryo%E4%BC%98%E5%8C%96%E5%BA%8F%E5%88%97%E5%8C%96%E6%80%A7%E8%83%BD"><span class="toc-number">8.</span> <span class="toc-text">原则八 : 使用Kryo优化序列化性能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#kryo%E5%BA%8F%E5%88%97%E5%8C%96%E7%A4%BA%E4%BE%8B"><span class="toc-number">8.1.</span> <span class="toc-text">kryo序列化示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E5%88%99%E4%B9%9D-%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">9.</span> <span class="toc-text">原则九 : 优化数据结构</span></a></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.873Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.869Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.865Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.860Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/27/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 自定义排序"/></a><div class="content"><a class="title" href="/2021/07/27/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序">Spark - 自定义排序</a><time datetime="2021-07-27T14:38:56.158Z" title="发表于 2021-07-27 22:38:56">2021-07-27</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 田一顷</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

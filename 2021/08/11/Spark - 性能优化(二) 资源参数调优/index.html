@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>my precious | my precious</title><meta name="author" content="田一顷"><meta name="copyright" content="田一顷"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="title：Spark - 性能优化(二) 资源参数调优category：Spark  资源参数调优概述Spark的资源参数，基本都可以在spark-submit命令中作为参数设置。资源参数设置的不合理，可能会导致没有充分利用集群资源，作业运行会极其缓慢；或者设置的资源过大，队列没有足够的资源来提供，进而导致各种异常。因此我们必须对Spark作业的资源使用原理有一个清晰的认识，并知道在Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="my precious">
+<meta property="og:url" content="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/index.html">
+<meta property="og:site_name" content="my precious">
+<meta property="og:description" content="title：Spark - 性能优化(二) 资源参数调优category：Spark  资源参数调优概述Spark的资源参数，基本都可以在spark-submit命令中作为参数设置。资源参数设置的不合理，可能会导致没有充分利用集群资源，作业运行会极其缓慢；或者设置的资源过大，队列没有足够的资源来提供，进而导致各种异常。因此我们必须对Spark作业的资源使用原理有一个清晰的认识，并知道在Spark">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-11T10:22:07.865Z">
+<meta property="article:modified_time" content="2021-08-10T10:33:56.932Z">
+<meta property="article:author" content="田一顷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-10 18:33:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/header.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-11T10:22:07.865Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-10T10:33:56.932Z" title="更新于 2021-08-10 18:33:56">2021-08-10</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><hr>
+<p>title：Spark - 性能优化(二) 资源参数调优<br>category：Spark</p>
+<hr>
+<h1 id="资源参数调优概述"><a href="#资源参数调优概述" class="headerlink" title="资源参数调优概述"></a>资源参数调优概述</h1><p>Spark的资源参数，基本都可以在spark-submit命令中作为参数设置。<br>资源参数设置的不合理，可能会导致没有充分利用集群资源，作业运行会极其缓慢；或者设置的资源过大，队列没有足够的资源来提供，进而导致各种异常。<br>因此我们必须对Spark作业的资源使用原理有一个清晰的认识，并知道在Spark作业运行过程中，有哪些资源参数是可以设置的，以及如何设置合适的参数值。</p>
+<h2 id="Spark作业基本运行原理"><a href="#Spark作业基本运行原理" class="headerlink" title="Spark作业基本运行原理"></a>Spark作业基本运行原理</h2><p><a target="_blank" rel="noopener" href="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2016/1f1ddad5.png">!Spark作业基本运行原理</a></p>
+<p>我们使用spark-submit提交一个Spark作业之后，这个作业就会启动<strong>一个对应的Driver进程</strong>。<br>根据你使用的部署模式(deploy-mode)不同，Driver进程可能在本地启动，也可能在集群中某个工作节点上启动。(client或者cluster)<br>Driver进程本身会根据我们设置的参数，占有一定数量的内存和CPU core。<br>而Driver进程要做的第一件事情，就是向集群管理器(可以是Spark Standalone集群，也可以是其他的资源管理集群，使用的较多的是YARN作为资源管理集群)申请运行Spark作业需要使用的资源，这里的资源指的就是Executor进程。<br>YARN集群管理器会根据我们为Spark作业设置的资源参数，在各个工作节点上，启动一定数量的Executor进程，每个Executor进程都占有一定数量的内存和CPU core。<br>**(领取资源，启动Executor进程)**</p>
+<p>在申请到了作业执行所需的资源之后，Driver进程就会开始调度和执行我们编写的作业代码了。<br>Driver进程会将我们编写的Spark作业代码分拆为多个stage，每个stage执行一部分代码片段，并为每个stage创建一批task，然后将这些task分配到各个Executor进程中执行。<br>task是最小的计算单元，负责执行一模一样的计算逻辑(也就是我们自己编写的某个代码片段)，只是每个task处理的数据不同而已。<br>一个stage的所有task都执行完毕之后，会在各个节点本地的磁盘文件中写入计算中间结果，然后Driver就会调度运行下一个stage。<br>下一个stage的task的输入数据就是上一个stage输出的中间结果。如此循环往复，直到将我们自己编写的代码逻辑全部执行完，并且计算完所有的数据，得到我们想要的结果为止。<br>**(运行任务，直到任务完成)**</p>
+<p>与MapReduce on YARN大同小异，<a target="_blank" rel="noopener" href="https://preciousmaker.github.io/2020/12/07/MapReduce%20on%20YARN%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/">MapReduce on YARN 提交流程</a></p>
+<p>Spark是根据shuffle类算子来进行stage的划分。如果我们的代码中执行了某个shuffle类算子(比如reduceByKey、join等)，那么就会在该算子处，划分出一个stage界限来。<br>可以大致理解为，shuffle算子执行之前的代码会被划分为一个stage，shuffle算子执行以及之后的代码会被划分为下一个stage。<br>因此一个stage刚开始执行的时候，它的每个task可能都会从上一个stage的task所在的节点，去通过网络传输拉取需要自己处理的所有key，然后对拉取到的所有相同的key使用我们自己编写的算子函数执行聚合操作(比如reduceByKey()算子接收的函数)。这个过程就是shuffle。</p>
+<p>当我们在代码中执行了cache/persist等持久化操作时，根据我们选择的持久化级别的不同，每个task计算出来的数据也会保存到Executor进程的内存或者所在节点的磁盘文件中。</p>
+<p>因此Executor的内存主要分为三块：</p>
+<ol>
+<li>第一块是让task执行我们自己编写的代码时使用，默认是占Executor总内存的20%</li>
+<li>第二块是让task通过shuffle过程拉取了上一个stage的task的输出后，进行聚合等操作时使用，默认也是占Executor总内存的20%</li>
+<li>第三块是让RDD持久化时使用，默认占Executor总内存的60%。</li>
+</ol>
+<p>task的执行速度是跟每个Executor进程的CPU core数量有直接关系的。一个CPU core同一时间只能执行一个线程。而每个Executor进程上分配到的多个task，都是以每个task一条线程的方式，多线程并发运行的。如果CPU core数量比较充足，而且分配到的task数量比较合理，那么通常来说，可以比较快速和高效地执行完这些task线程。</p>
+<h1 id="资源参数调优"><a href="#资源参数调优" class="headerlink" title="资源参数调优"></a>资源参数调优</h1><p>所谓的Spark资源参数调优，其实主要就是对Spark运行过程中各个使用资源的地方，通过调节各种参数，来优化资源使用的效率，从而提升Spark作业的执行性能。<br>以下参数就是Spark中主要的资源参数，每个参数都对应着作业运行原理中的某个部分，我们同时也给出了一个调优的参考值。</p>
+<h2 id="num-executors"><a href="#num-executors" class="headerlink" title="num-executors"></a>num-executors</h2><ul>
+<li>参数说明 : 该参数用于设置Spark作业总共要用多少个Executor进程来执行。<br>Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。这个参数非常之重要，如果不设置的话，默认只会给你启动少量的Executor进程，此时你的Spark作业的运行速度是非常慢的。</li>
+<li>参数调优建议 : 每个Spark作业的运行一般设置50~100个左右的Executor进程比较合适，设置太少或太多的Executor进程都不好。设置的太少，无法充分利用集群资源；设置的太多的话，大部分队列可能无法给予充分的资源。</li>
+</ul>
+<h2 id="executor-memory"><a href="#executor-memory" class="headerlink" title="executor-memory"></a>executor-memory</h2><ul>
+<li>参数说明 : 该参数用于设置每个Executor进程的内存。<br>Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。</li>
+<li>参数调优建议 : 每个Executor进程的内存设置4G<del>8G较为合适。<br>但是这只是一个<strong>参考值</strong>，具体的设置还是得根据不同部门的资源队列来定。<br>可以看看自己团队的资源队列的最大内存限制是多少，num-executors 乘以 executor-memory，是不能超过队列的最大内存量的。<br>此外，如果你是跟团队里其他人共享这个资源队列，那么申请的内存量最好不要超过资源队列最大总内存的1/3</del>1/2，避免你自己的Spark作业占用了队列所有的资源，导致其他人的作业无法运行。</li>
+</ul>
+<h2 id="executor-cores"><a href="#executor-cores" class="headerlink" title="executor-cores"></a>executor-cores</h2><ul>
+<li>参数说明 : 该参数用于设置每个Executor进程的CPU core数量。<br>这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPU core同一时间只能执行一个task线程，因此每个Executor进程的CPU core数量越多，越能够快速地执行完分配给自己的所有task线程。</li>
+<li>参数调优建议 : Executor的CPU core数量设置为2<del>4个较为合适。<br>同样得根据不同部门的资源队列来定，可以看看自己的资源队列的最大CPU core限制是多少，再依据设置的Executor数量，来决定每个Executor进程可以分配到几个CPU core。同样建议，如果是跟他人共享这个队列，那么num-executors 乘以 executor-cores不要超过队列总CPU core的1/3</del>1/2左右比较合适，也是避免影响其他人的作业运行。</li>
+</ul>
+<h2 id="driver-memory"><a href="#driver-memory" class="headerlink" title="driver-memory"></a>driver-memory</h2><ul>
+<li>参数说明 : 该参数用于设置Driver进程的内存。<br>Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。</li>
+<li>参数调优建议 : Driver的内存通常来说不设置，或者设置1G左右应该就够了。<br>唯一需要注意的一点是，如果需要使用collect算子将RDD的数据全部拉取到Driver上进行处理，那么必须确保Driver的内存足够大，否则会出现OOM内存溢出的问题。</li>
+</ul>
+<h2 id="spark-default-parallelism"><a href="#spark-default-parallelism" class="headerlink" title="spark.default.parallelism"></a>spark.default.parallelism</h2><ul>
+<li>参数说明 : 该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。<br>Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。</li>
+<li>参数调优建议 : Spark作业的默认task数量为500<del>1000个较为合适。<br>很多人常犯的一个错误就是不去设置这个参数，那么此时就会导致Spark自己根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。<br>通常来说，Spark默认设置的数量是偏少的（比如就几十个task），如果task数量偏少的话，就会导致你前面设置好的Executor的参数都前功尽弃。试想一下，无论你的Executor进程有多少个，内存和CPU有多大，但是task只有1个或者10个，那么90%的Executor进程可能根本就没有task执行，也就是白白浪费了资源！<br>Spark官网建议的设置原则是，设置该参数为num-executors 乘以 executor-cores的2</del>3倍较为合适，比如Executor的总CPU core数量为300个，那么设置1000个task是可以的，此时可以充分地利用Spark集群的资源。</li>
+</ul>
+<h2 id="spark-storage-memoryFraction"><a href="#spark-storage-memoryFraction" class="headerlink" title="spark.storage.memoryFraction"></a>spark.storage.memoryFraction</h2><ul>
+<li>参数说明 : 该参数用于设置RDD持久化数据在Executor内存中能占的比例，默认是0.6。<br>也就是说，默认Executor 60%的内存，可以用来保存持久化的RDD数据。根据你选择的不同的持久化策略，如果内存不够时，可能数据就不会持久化，或者数据会写入磁盘。</li>
+<li>参数调优建议 : 如果Spark作业中，有较多的RDD持久化操作，该参数的值可以适当提高一些，保证持久化的数据能够容纳在内存中。<br>避免内存不够缓存所有的数据，导致数据只能写入磁盘中，降低了性能。但是如果Spark作业中的shuffle类操作比较多，而持久化操作比较少，那么这个参数的值适当降低一些比较合适。<br>此外，如果发现作业由于频繁的gc导致运行缓慢(通过spark web ui可以观察到作业的gc耗时)，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</li>
+</ul>
+<h2 id="spark-shuffle-memoryFraction"><a href="#spark-shuffle-memoryFraction" class="headerlink" title="spark.shuffle.memoryFraction"></a>spark.shuffle.memoryFraction</h2><ul>
+<li>参数说明 : 该参数用于设置shuffle过程中一个task拉取到上个stage的task的输出后，进行聚合操作时能够使用的Executor内存的比例，默认是0.2。<br>也就是说，Executor默认只有20%的内存用来进行该操作。shuffle操作在进行聚合时，如果发现使用的内存超出了这个20%的限制，那么多余的数据就会溢写到磁盘文件中去，此时就会极大地降低性能。</li>
+<li>参数调优建议 : 如果Spark作业中的RDD持久化操作较少，shuffle操作较多时，建议降低持久化操作的内存占比，提高shuffle操作的内存占比比例，避免shuffle过程中数据过多时内存不够用，必须溢写到磁盘上，降低了性能。<br>此外，如果发现作业由于频繁的gc导致运行缓慢，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</li>
+</ul>
+<p>资源参数的调优，没有一个固定的值，需要根据自己的实际情况(包括Spark作业中的shuffle操作数量、RDD持久化操作数量以及spark web ui中显示的作业gc情况)，同时参考本篇文章中给出的原理以及调优建议，合理地设置上述参数。</p>
+<h1 id="资源参数参考示例"><a href="#资源参数参考示例" class="headerlink" title="资源参数参考示例"></a>资源参数参考示例</h1><p>以下是一份spark-submit命令的示例，可以参考一下，并根据自己的实际情况进行调节：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./bin/spark-submit \</span><br><span class="line">  --master yarn-cluster \</span><br><span class="line">  --num-executors 100 \</span><br><span class="line">  --executor-memory 6G \</span><br><span class="line">  --executor-cores 4 \</span><br><span class="line">  --driver-memory 1G \</span><br><span class="line">  --conf spark.default.parallelism=1000 \</span><br><span class="line">  --conf spark.storage.memoryFraction=0.5 \</span><br><span class="line">  --conf spark.shuffle.memoryFraction=0.3 \</span><br></pre></td></tr></table></figure>
+
+<p>根据实践经验来看，大部分Spark作业经过本次基础篇所讲解的开发调优与资源调优之后，一般都能以较高的性能运行了，足以满足我们的需求。<br>但是在不同的生产环境和项目背景下，可能会遇到其他更加棘手的问题(比如<strong>各种数据倾斜</strong>)，也可能会遇到更高的性能要求。<br>为了应对这些挑战，需要使用更高级的技巧来处理这类问题。在后续的<code>Spark - 性能优化(三) 高级篇</code>中，详细讲解<strong>数据倾斜调优以及Shuffle调优</strong>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">田一顷</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/">https://github.com/preciousmaker/preciousmaker.github.io/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://github.com/preciousmaker/preciousmaker.github.io" target="_blank">my precious</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/header.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">田一顷</div><div class="author-info__description">田一顷</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" href="https://github.com/preciousmaker/preciousmaker.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">资源参数调优概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark%E4%BD%9C%E4%B8%9A%E5%9F%BA%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">Spark作业基本运行原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-number">2.</span> <span class="toc-text">资源参数调优</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#num-executors"><span class="toc-number">2.1.</span> <span class="toc-text">num-executors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#executor-memory"><span class="toc-number">2.2.</span> <span class="toc-text">executor-memory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#executor-cores"><span class="toc-number">2.3.</span> <span class="toc-text">executor-cores</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#driver-memory"><span class="toc-number">2.4.</span> <span class="toc-text">driver-memory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spark-default-parallelism"><span class="toc-number">2.5.</span> <span class="toc-text">spark.default.parallelism</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spark-storage-memoryFraction"><span class="toc-number">2.6.</span> <span class="toc-text">spark.storage.memoryFraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spark-shuffle-memoryFraction"><span class="toc-number">2.7.</span> <span class="toc-text">spark.shuffle.memoryFraction</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E5%8F%82%E8%80%83%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">资源参数参考示例</span></a></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.873Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.869Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.865Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="无题">无题</a><time datetime="2021-08-11T10:22:07.860Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/27/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 自定义排序"/></a><div class="content"><a class="title" href="/2021/07/27/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序">Spark - 自定义排序</a><time datetime="2021-07-27T14:38:56.158Z" title="发表于 2021-07-27 22:38:56">2021-07-27</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 田一顷</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
