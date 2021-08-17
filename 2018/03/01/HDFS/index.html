@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HDFS | my precious</title><meta name="author" content="田一顷"><meta name="copyright" content="田一顷"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="HDFS 配置官方配置文档：https:&#x2F;&#x2F;hadoop.apache.org&#x2F;docs&#x2F;stable&#x2F;hadoop-project-dist&#x2F;hadoop-hdfs&#x2F;hdfs-default.xml 目录：&#x2F;home&#x2F;hadoop&#x2F;app&#x2F;hadoop&#x2F;etc&#x2F;hadoop&#x2F;hdfs-site.xml 123456789101112131415161718&lt;configuration&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDFS">
+<meta property="og:url" content="https://github.com/preciousmaker/preciousmaker.github.io/2018/03/01/HDFS/index.html">
+<meta property="og:site_name" content="my precious">
+<meta property="og:description" content="HDFS 配置官方配置文档：https:&#x2F;&#x2F;hadoop.apache.org&#x2F;docs&#x2F;stable&#x2F;hadoop-project-dist&#x2F;hadoop-hdfs&#x2F;hdfs-default.xml 目录：&#x2F;home&#x2F;hadoop&#x2F;app&#x2F;hadoop&#x2F;etc&#x2F;hadoop&#x2F;hdfs-site.xml 123456789101112131415161718&lt;configuration&amp;gt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-02-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-17T11:31:45.260Z">
+<meta property="article:author" content="田一顷">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/preciousmaker/preciousmaker.github.io/2018/03/01/HDFS/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-17 19:31:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/header.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">my precious</a></span><span id="menus"><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">HDFS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-02-28T16:00:00.000Z" title="发表于 2018-03-01 00:00:00">2018-03-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-17T11:31:45.260Z" title="更新于 2021-08-17 19:31:45">2021-08-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HDFS/">HDFS</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HDFS-配置"><a href="#HDFS-配置" class="headerlink" title="HDFS 配置"></a>HDFS 配置</h1><p>官方配置文档：<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a></p>
+<p>目录：/home/hadoop/app/hadoop/etc/hadoop/hdfs-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;precious:9868&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.https-address&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;precious:9869&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.datanode.balance.bandwidthPerSec&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;value&gt;50m&lt;&#x2F;value&gt;</span><br><span class="line">    &lt;&#x2F;property&gt;</span><br><span class="line">&lt;&#x2F;configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>dfs.replication<br>默认块复制。创建文件时可以指定实际的复制数量。如果在创建时未指定复制，则使用默认值(3)。<br>由于是伪分布式，故这里是1，指定为2或者3也可以，不过使用hdfs dfs / 会显示丢失副本</p>
+<p>dfs.namenode.secondary.http-address<br>secondarynamenode http服务器地址和端口。</p>
+<p>dfs.namenode.secondary.https-address<br>secondarynamenode https服务器地址和端口。</p>
+<p>dfs.datanode.balance.bandwidthPerSec<br>以每秒字节数为单位，指定每个数据节点可用于平衡目的的<strong>最大带宽量</strong>。</p>
+<p>关于配置部分，在后续的学习工作中会补充</p>
+<h1 id="HDFS-优缺点"><a href="#HDFS-优缺点" class="headerlink" title="HDFS 优缺点"></a>HDFS 优缺点</h1><p>总结均搜罗网上总结，需要在后续学习中加深印象</p>
+<h2 id="HDFS-优点"><a href="#HDFS-优点" class="headerlink" title="HDFS 优点"></a>HDFS 优点</h2><h3 id="处理海量数据"><a href="#处理海量数据" class="headerlink" title="处理海量数据"></a>处理海量数据</h3><ol>
+<li>   处理数据达到GB,TB,甚至PB级别的数据</li>
+<li>   支持处理百万规模以上的文件数量</li>
+<li>   能够处理<strong>10K+节点</strong>的规模</li>
+</ol>
+<h3 id="适合批处理"><a href="#适合批处理" class="headerlink" title="适合批处理"></a>适合批处理</h3><ol>
+<li>   移动计算而不是移动数据</li>
+<li>   会把数据位置暴露给计算框架</li>
+</ol>
+<h3 id="高容错"><a href="#高容错" class="headerlink" title="高容错"></a>高容错</h3><ol>
+<li>   数据自动保存多个副本，通过增加副本的形式，提高容错性</li>
+<li>   某一个副本丢失以后，可以自动恢复，这是由HDFS内部机制实现的</li>
+</ol>
+<h3 id="流式文件访问"><a href="#流式文件访问" class="headerlink" title="流式文件访问"></a>流式文件访问</h3><ol>
+<li>   一次写入，多次读取，文件一旦写入不能修改，只能追加</li>
+<li>   可以保证数据的一致性</li>
+</ol>
+<h3 id="可构建在廉价机器上"><a href="#可构建在廉价机器上" class="headerlink" title="可构建在廉价机器上"></a>可构建在廉价机器上</h3><ol>
+<li>   通过多副本机制，提高可靠性</li>
+<li>   提供了容错和恢复机制，比如某一个副本丢失，可以通过其他副本来恢复</li>
+</ol>
+<h2 id="HDFS-缺点"><a href="#HDFS-缺点" class="headerlink" title="HDFS 缺点"></a>HDFS 缺点</h2><ol>
+<li>   不支持毫秒级</li>
+<li>   小文件存储会造成问题，需要工程师合并小文件</li>
+<li>   不支持并发写入，一个文件只能有一个写，不允许多个线程同时写</li>
+<li>   不支持文件的随机修改</li>
+</ol>
+<p>目前3,4点不理解</p>
+<h1 id="HDFS-主从架构"><a href="#HDFS-主从架构" class="headerlink" title="HDFS 主从架构"></a>HDFS 主从架构</h1><h2 id="NameNode-NN"><a href="#NameNode-NN" class="headerlink" title="NameNode(NN)"></a>NameNode(NN)</h2><p>简写NN 名称节点<br>包含：<br>1.文件的名称<br>2.文件的目录结构<br>3.文件的属性(权限，副本数，创建时间等)<br>可以使用hdfs dfs -ls查看<br><strong>4</strong>.一个文件被对应切割那些数据块(包含副本数的块) ==&gt; 对应分布在那些datanode<br>blockmap 块映射 NN是不会持久化存储这些映射关系<br>是通过集群的启动和运行时，DN定期汇报blockport给NN，然后再内存中动态维护这种映射关系</p>
+<p>作用：<br>管理文件系统的命名空间，其实就是维护文件系统树的文件和文件夹</p>
+<p>主要文件：<br>镜像文件：fsimage</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r-- 1 hadoop hadoop    6882 Nov 26 15:26 fsimage<span class="emphasis">_0000000000000000944</span></span><br><span class="line"><span class="emphasis">-rw-rw-r-- 1 hadoop hadoop      62 Nov 26 15:26 fsimage_</span>0000000000000000944.md5</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop    6882 Nov 26 16:26 fsimage<span class="emphasis">_0000000000000000946</span></span><br><span class="line"><span class="emphasis">-rw-rw-r-- 1 hadoop hadoop      62 Nov 26 16:26 fsimage_</span>0000000000000000946.md5</span><br></pre></td></tr></table></figure>
+
+<p>编辑日志文件：editlogs</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r-- 1 hadoop hadoop      42 Nov 22 17:35 edits<span class="emphasis">_0000000000000000005-0000000000000000006</span></span><br><span class="line"><span class="emphasis">-rw-rw-r-- 1 hadoop hadoop   22300 Nov 22 18:35 edits_</span>0000000000000000007-0000000000000000216</span><br></pre></td></tr></table></figure>
+<p>这两种文件均在 /home/hadoop/tmp/dfs/name/current</p>
+<h2 id="SecondNameNode-SNN"><a href="#SecondNameNode-SNN" class="headerlink" title="SecondNameNode(SNN)"></a>SecondNameNode(SNN)</h2><p>简写SNN 第二名称节点<br>1.将fsimage和editlogs文件合并 备份 推送给NN<br>例如在/home/hadoop/tmp/dfs/namesecondary/current<br>将fsimage_0000000000000000<strong>978</strong> 和 edits_0000000000000000<strong>979</strong>-0000000000000000<strong>980</strong> 通过检查点动作(checkpoint)<br>合并到fsimage_0000000000000000<strong>980</strong>并推送给NN<br>而新的读写记录则在edits_inprogress_0000000000000000<strong>981</strong>编辑日志里<br>写满或者到时间会放入edits_0000000000000000<strong>981</strong>-0000000000000000<strong>982</strong>，再和fsimage_0000000000000000<strong>980</strong>通过检查点动作(checkpoint)<br>合并到fsimage_0000000000000000<strong>982</strong>并推送给NN<br>如此往复</p>
+<p>dfs.namenode.checkpoint.period    3600    时间，默认一小时<br>dfs.namenode.checkpoint.txns    1000000    事务性条数</p>
+<p>早期为了解决NN是单点的，可能出现单点故障，增加一个SNN，一小时做一次checkpoint<br>虽然能够减轻单点故障带来的数据丢失风险，但是生产环境上不允许使用SNN<br>比如：<br>11:00 checkpoint<br>11:30 数据在读写，突然NN硬盘挂了 无法回复<br>拿SNN节点的最新的fsimage，也只能恢复11点的数据<br>所以生产环境上是不允许使用SNN，使用的是HA高可靠，通过配置另外一个实时的备份NN节点，随时等待active的NN挂掉，然后称为NN</p>
+<h2 id="DataNode-DN"><a href="#DataNode-DN" class="headerlink" title="DataNode(DN)"></a>DataNode(DN)</h2><p>简写DN 数据节点<br>1.存储数据块 和 数据块的校验和(元数据)<br>主要文件：<br>块(其中记录的是JSON格式的数据)：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r-- 1 hadoop hadoop  33K Nov 24 17:44 blk<span class="emphasis">_1073741913</span></span><br><span class="line"><span class="emphasis">-rw-rw-r-- 1 hadoop hadoop 138K Nov 24 17:44 blk_</span>1073741914</span><br></pre></td></tr></table></figure>
+<p>一个块默认最大是128M，这里可以看出块只用到了很小一部分</p>
+<p>块对应的元数据：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r-- 1 hadoop hadoop  271 Nov 24 17:44 blk<span class="emphasis">_1073741913_</span>1089.meta</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop 1.1K Nov 24 17:44 blk<span class="emphasis">_1073741914_</span>1090.meta</span><br></pre></td></tr></table></figure>
+<p>这两种文件均在 /home/hadoop/tmp/dfs/data/current/BP-1509220353-192.168.0.129-1606030424062/current/finalized/subdir0/subdir0</p>
+<p>2.每隔一段时间去发送blockreport(块报告)到NN<br>dfs.blockreport.intervalMsec    21600000    21600000ms=6h</p>
+<p>在报告给NN前需要检查一下自身<br>dfs.datanode.directoryscan.interval 21600    21600s=6h</p>
+<p>这两个参数一般设置成一样的</p>
+<p>补充《生产HDFS Block损坏恢复最佳实践》<br><a target="_blank" rel="noopener" href="https://ruozedata.github.io/2019/06/06/%E7%94%9F%E4%BA%A7HDFS%20Block%E6%8D%9F%E5%9D%8F%E6%81%A2%E5%A4%8D%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5(%E5%90%AB%E6%80%9D%E8%80%83%E9%A2%98)/">https://ruozedata.github.io/2019/06/06/%E7%94%9F%E4%BA%A7HDFS%20Block%E6%8D%9F%E5%9D%8F%E6%81%A2%E5%A4%8D%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5(%E5%90%AB%E6%80%9D%E8%80%83%E9%A2%98)/</a></p>
+<h1 id="HDFS-读写流程"><a href="#HDFS-读写流程" class="headerlink" title="HDFS 读写流程"></a>HDFS 读写流程</h1><p>【经典面试题】</p>
+<h2 id="HDFS-读流程"><a href="#HDFS-读流程" class="headerlink" title="HDFS 读流程"></a>HDFS 读流程</h2><ol>
+<li><p>   HDFS Client 调用FileSystem.open(filePath)，与NN进行【RPC】通信，返回该文件的部分或者全部的block列表<br>也就是返回【FSDataIutputStream】对象</p>
+</li>
+<li><p>   HDFS Client 调用FileSystem.read方法，与第一个块的最近的DN进行读取，读取完成后，会检查，假如OK就关闭与DN通信。<br>假如不OK，就会记录块和DN的信息，下次就不从这个节点读取，那么从第二个节点读取。<br>然后与第二个块的最近的DN进行读取，以此类推。<br>当block的列表全部读取完成，文件还没结束，就调用FileSystem从NN获取下一批次的block列表。</p>
+</li>
+<li><p>   HDFS Client 调用【FSDataIutputStream】对象的close方法，关闭数据流</p>
+</li>
+</ol>
+<h2 id="HDFS-写流程"><a href="#HDFS-写流程" class="headerlink" title="HDFS 写流程"></a>HDFS 写流程</h2><p>对用户是无感知的</p>
+<ol>
+<li><p>   HDFS Client 调用FileSystem.create(filePath)方法，去和NN进行【RPC】通信<br>NN会去检查这个文件是否存在，是否有权限创建这个文件<br>假如都可以，就创建一个新的文件，但是这个时候是没有数据的，是不关联任何block的<br>NN根据文件的大小，块大小，副本数等，计算要上传多少的块和对应的DN节点<br>最终这个信息返回给客户端【FSDataOutputStream】对象</p>
+</li>
+<li><p>   HDFS Client 调用客户端【FSDataOutputStream】对象的write方法，<br>根据【副本放置策略】，将第一个块的第一个副本写到DN1，写完复制到DN2，再复制到DN3，<br>当第三个副本写完，就返回一个ack package确认包给DN2，DN2接收到ack加上自己写完，发送ack给DN1，<br>DN1接收完ack加上自己写完，就发送ack给客户端【FSDataOutputStream】对象，告诉它第一个块的三副本写完。<br>以此类推</p>
+</li>
+<li><p>   当所有的块全部写完，HDFS Client 调用【FSDataOutputStream】对象的close方法，关闭数据流<br>然后调用FileSystem.complete方法，告诉NN文件写成功</p>
+</li>
+</ol>
+<h2 id="副本放置策略"><a href="#副本放置策略" class="headerlink" title="副本放置策略"></a>副本放置策略</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eE411p7un">https://www.bilibili.com/video/BV1eE411p7un</a><br>生产上读写操作，尽量选择DN节点操作</p>
+<p>第一个副本：<br>放置在上传的DN节点上，就近原则，节省IO<br>假如非DN节点，就随机挑选一个磁盘不太慢，CPU不太忙的节点</p>
+<p>第二个副本：<br>放置在第一个副本的不同机架上的某个节点</p>
+<p>第三个副本：<br>与第二个副本放置同一个几家的不同节点上</p>
+<p>生产环境一般为三个副本，足够使用<br>如果副本数设置更多，随机放。</p>
+<h1 id="HDFS-命令"><a href="#HDFS-命令" class="headerlink" title="HDFS 命令"></a>HDFS 命令</h1><h2 id="HDFS-命令帮助"><a href="#HDFS-命令帮助" class="headerlink" title="HDFS 命令帮助"></a>HDFS 命令帮助</h2><p>目录：/home/hadoop/app/hadoop/bin/hdfs<br>打开可以看到所有命令的shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /home/hadoop/app/hadoop/bin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat hdfs</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat hadoop</span></span><br></pre></td></tr></table></figure>
+<p>其中，hdfs dfs和hadoop fs命令的底层调用的接口是同一个<br><strong>hdfs</strong><br>elif [ “$COMMAND” = “dfs” ] ; then<br>  CLASS=org.apache.hadoop.fs.FsShell</p>
+<p><strong>hadoop</strong><br>if [ “$COMMAND” = “fs” ] ; then<br>  CLASS=org.apache.hadoop.fs.FsShell</p>
+<p>还可以通过hdfs或者hdfs –help获取命令帮助</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hdfs --<span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Usage: hdfs [--config confdir] COMMAND</span><br><span class="line">       where COMMAND is one of:</span><br><span class="line">  dfs                  run a filesystem command on the file systems supported in Hadoop.</span><br><span class="line">  namenode -format     format the DFS filesystem</span><br><span class="line">  secondarynamenode    run the DFS secondary namenode</span><br><span class="line">  namenode             run the DFS namenode</span><br><span class="line">  journalnode          run the DFS journalnode</span><br><span class="line">  zkfc                 run the ZK Failover Controller daemon</span><br><span class="line">  datanode             run a DFS datanode</span><br><span class="line">  dfsadmin             run a DFS admin client</span><br><span class="line">  diskbalancer         Distributes data evenly among disks on a given node</span><br><span class="line">  haadmin              run a DFS HA admin client</span><br><span class="line">  fsck                 run a DFS filesystem checking utility</span><br><span class="line">  balancer             run a cluster balancing utility</span><br><span class="line">  jmxget               get JMX exported values from NameNode or DataNode.</span><br><span class="line">  mover                run a utility to move block replicas across</span><br><span class="line">                       storage types</span><br><span class="line">  oiv                  apply the offline fsimage viewer to an fsimage</span><br><span class="line">  oiv_legacy           apply the offline fsimage viewer to an legacy fsimage</span><br><span class="line">  oev                  apply the offline edits viewer to an edits file</span><br><span class="line">  fetchdt              fetch a delegation token from the NameNode</span><br><span class="line">  getconf              get config values from configuration</span><br><span class="line">  groups               get the groups which users belong to</span><br><span class="line">  snapshotDiff         diff two snapshots of a directory or diff the</span><br><span class="line">                       current directory contents with a snapshot</span><br><span class="line">  lsSnapshottableDir   list all snapshottable dirs owned by the current user</span><br><span class="line">						Use -help to see options</span><br><span class="line">  portmap              run a portmap service</span><br><span class="line">  nfs3                 run an NFS version 3 gateway</span><br><span class="line">  cacheadmin           configure the HDFS cache</span><br><span class="line">  crypto               configure HDFS encryption zones</span><br><span class="line">  storagepolicies      list&#x2F;get&#x2F;set block storage policies</span><br><span class="line">  version              print the version</span><br><span class="line"></span><br><span class="line">Most commands print help when invoked w&#x2F;o parameters.</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="hdfs-dfs"><a href="#hdfs-dfs" class="headerlink" title="hdfs dfs"></a>hdfs dfs</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs dfs</span></span><br></pre></td></tr></table></figure>
+
+<p>常用的参数，大部分参数是与linux一致的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[-cat [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">[-chmod [-R] &lt;MODE[,MODE]... | OCTALMODE&gt; PATH...]</span><br><span class="line">[-chown [-R] [OWNER][:[GROUP]] PATH...]</span><br><span class="line">[-copyFromLocal [-f] [-p] [-l] &lt;localsrc&gt; ... &lt;dst&gt;]			【等价于put】</span><br><span class="line">[-copyToLocal [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]	【等价于get】</span><br><span class="line">[-put [-f] [-p] [-l] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">[-get [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">[-cp [-f] [-p | -p[topax]] &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">[-du [-s] [-h] [-x] &lt;path&gt; ...]</span><br><span class="line">[-find &lt;path&gt; ... &lt;expression&gt; ...]</span><br><span class="line">[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [&lt;path&gt; ...]]</span><br><span class="line">[-mkdir [-p] &lt;path&gt; ...]</span><br><span class="line">[-mv &lt;src&gt; ... &lt;dst&gt;]											【生产上不建议使用移动，原因是移动过程中假如有问题，会导致数据不全。建议是使用cp ，验证通过，再去删除源端】</span><br><span class="line">[-rm [-f] [-r|-R] [-skipTrash] &lt;src&gt; ...]						【-skipTrash  不建议使用】</span><br><span class="line">[-rmdir [--ignore-fail-on-non-empty] &lt;dir&gt; ...]</span><br></pre></td></tr></table></figure>
+
+<h2 id="hdfs-dfsadmin"><a href="#hdfs-dfsadmin" class="headerlink" title="hdfs dfsadmin"></a>hdfs dfsadmin</h2><p>dfs管理操作命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs dfsadmin</span></span><br></pre></td></tr></table></figure>
+
+<p>常用参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-safemode &lt;enter | leave | get | wait&gt;]						【安全模式】</span><br></pre></td></tr></table></figure>
+
+<h2 id="hdfs-haadmin"><a href="#hdfs-haadmin" class="headerlink" title="hdfs haadmin"></a>hdfs haadmin</h2><h2 id="hdfs-fsck"><a href="#hdfs-fsck" class="headerlink" title="hdfs fsck /"></a>hdfs fsck /</h2><p>健康检查</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs fsck /</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">20&#x2F;12&#x2F;02 14:00:30 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Connecting to namenode via http:&#x2F;&#x2F;precious:50070&#x2F;fsck?ugi&#x3D;hadoop&amp;path&#x3D;%2F</span><br><span class="line">FSCK started by hadoop (auth:SIMPLE) from &#x2F;192.168.0.129 for path &#x2F; at Wed Dec 02 14:00:31 CST 2020</span><br><span class="line">..............................................................Status: HEALTHY</span><br><span class="line"> Total size:	957498 B</span><br><span class="line"> Total dirs:	17</span><br><span class="line"> Total files:	62</span><br><span class="line"> Total symlinks:		0</span><br><span class="line"> Total blocks (validated):	47 (avg. block size 20372 B)</span><br><span class="line"> Minimally replicated blocks:	47 (100.0 %)</span><br><span class="line"> Over-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Under-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Mis-replicated blocks:		0 (0.0 %)</span><br><span class="line"> Default replication factor:	1</span><br><span class="line"> Average block replication:	1.0</span><br><span class="line"> Corrupt blocks:		0</span><br><span class="line"> Missing replicas:		0 (0.0 %)</span><br><span class="line"> Number of data-nodes:		1</span><br><span class="line"> Number of racks:		1</span><br><span class="line">FSCK ended at Wed Dec 02 14:00:32 CST 2020 in 19 milliseconds</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The filesystem under path &#39;&#x2F;&#39; is HEALTHY</span><br></pre></td></tr></table></figure>
+
+<p>由于是伪分布式， Default replication factor:    1<br>如果是分布式机器的话，需要在 /home/hadoop/app/hadoop/etc/hadoop/hdfs-site.xml 中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line">    &lt;value&gt;1&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="hdfs-dfsadmin-safemode-get"><a href="#hdfs-dfsadmin-safemode-get" class="headerlink" title="hdfs dfsadmin -safemode get"></a>hdfs dfsadmin -safemode get</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs dfsadmin -safemode get</span></span><br></pre></td></tr></table></figure>
+<p>结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Safe mode is OFF</span><br></pre></td></tr></table></figure>
+<p>OFF关闭    读写都OK<br>ON开启    写不行，读OK</p>
+<p>若进入ON，也就是安全模式，有两种情况</p>
+<h3 id="被动进入安全模式"><a href="#被动进入安全模式" class="headerlink" title="被动进入安全模式"></a>被动进入安全模式</h3><p>说明HDFS集群是有问题，目前相当于处于一个保护模式</p>
+<h3 id="主动进入安全模式"><a href="#主动进入安全模式" class="headerlink" title="主动进入安全模式"></a>主动进入安全模式</h3><p>主要是做维护操作，保证这个时间段内hdfs不会有新的数据写入</p>
+<h1 id="HDFS-回收站"><a href="#HDFS-回收站" class="headerlink" title="HDFS 回收站"></a>HDFS 回收站</h1><p>类比于windows的回收站，不过只会保留一段时间被删除的文件<br>需在/home/hadoop/app/hadoop/etc/hadoop/core-site.xml中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">       &lt;name&gt;fs.trash.interval&lt;&#x2F;name&gt;</span><br><span class="line">       &lt;value&gt;10080&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+<p>单位是秒，所以参数10080的意思是7天<br>生产环境上必须要有回收站，且回收站默认时间尽量长，以防万一</p>
+<h2 id="hdfs-删除语法"><a href="#hdfs-删除语法" class="headerlink" title="hdfs 删除语法"></a>hdfs 删除语法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs dfs -rm /1.log</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hdfs dfs -rm -skipTrash /1.log 【不允许使用该参数】</span></span><br></pre></td></tr></table></figure>
+<p>涉及到删除，不准使用 -skipTrash(比进入回收站直接删除)，<br>设置回收站的目的就是让文件进入回收站，以防万一</p>
+<h1 id="hdfs-各节点平衡"><a href="#hdfs-各节点平衡" class="headerlink" title="hdfs 各节点平衡"></a>hdfs 各节点平衡</h1><h1 id="hdfs-单个节点多块磁盘平衡"><a href="#hdfs-单个节点多块磁盘平衡" class="headerlink" title="hdfs 单个节点多块磁盘平衡"></a>hdfs 单个节点多块磁盘平衡</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">田一顷</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://github.com/preciousmaker/preciousmaker.github.io/2018/03/01/HDFS/">https://github.com/preciousmaker/preciousmaker.github.io/2018/03/01/HDFS/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://github.com/preciousmaker/preciousmaker.github.io" target="_blank">my precious</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/03/30/Hive%201.1.0%20%E5%AE%89%E8%A3%85/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hive 1.1.0 安装</div></div></a></div><div class="next-post pull-right"><a href="/2018/02/24/mysql%E4%B8%ADinnodb%E5%92%8Cmysiam%E7%9A%84%E5%8C%BA%E5%88%AB/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">mysql中innodb和myisam的区别</div></div></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/header.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">田一顷</div><div class="author-info__description">田一顷</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" href="https://github.com/preciousmaker/preciousmaker.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">HDFS 配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">HDFS 优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS-%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">HDFS 优点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">2.1.1.</span> <span class="toc-text">处理海量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%90%88%E6%89%B9%E5%A4%84%E7%90%86"><span class="toc-number">2.1.2.</span> <span class="toc-text">适合批处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%AE%B9%E9%94%99"><span class="toc-number">2.1.3.</span> <span class="toc-text">高容错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="toc-number">2.1.4.</span> <span class="toc-text">流式文件访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E6%9E%84%E5%BB%BA%E5%9C%A8%E5%BB%89%E4%BB%B7%E6%9C%BA%E5%99%A8%E4%B8%8A"><span class="toc-number">2.1.5.</span> <span class="toc-text">可构建在廉价机器上</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS-%E7%BC%BA%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">HDFS 缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">HDFS 主从架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NameNode-NN"><span class="toc-number">3.1.</span> <span class="toc-text">NameNode(NN)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SecondNameNode-SNN"><span class="toc-number">3.2.</span> <span class="toc-text">SecondNameNode(SNN)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataNode-DN"><span class="toc-number">3.3.</span> <span class="toc-text">DataNode(DN)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">HDFS 读写流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS-%E8%AF%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">4.1.</span> <span class="toc-text">HDFS 读流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS-%E5%86%99%E6%B5%81%E7%A8%8B"><span class="toc-number">4.2.</span> <span class="toc-text">HDFS 写流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AF%E6%9C%AC%E6%94%BE%E7%BD%AE%E7%AD%96%E7%95%A5"><span class="toc-number">4.3.</span> <span class="toc-text">副本放置策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">HDFS 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS-%E5%91%BD%E4%BB%A4%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.1.</span> <span class="toc-text">HDFS 命令帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-dfs"><span class="toc-number">5.2.</span> <span class="toc-text">hdfs dfs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-dfsadmin"><span class="toc-number">5.3.</span> <span class="toc-text">hdfs dfsadmin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-haadmin"><span class="toc-number">5.4.</span> <span class="toc-text">hdfs haadmin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-fsck"><span class="toc-number">5.5.</span> <span class="toc-text">hdfs fsck &#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-dfsadmin-safemode-get"><span class="toc-number">5.6.</span> <span class="toc-text">hdfs dfsadmin -safemode get</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A2%AB%E5%8A%A8%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.6.1.</span> <span class="toc-text">被动进入安全模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E8%BF%9B%E5%85%A5%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.6.2.</span> <span class="toc-text">主动进入安全模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HDFS-%E5%9B%9E%E6%94%B6%E7%AB%99"><span class="toc-number">6.</span> <span class="toc-text">HDFS 回收站</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hdfs-%E5%88%A0%E9%99%A4%E8%AF%AD%E6%B3%95"><span class="toc-number">6.1.</span> <span class="toc-text">hdfs 删除语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs-%E5%90%84%E8%8A%82%E7%82%B9%E5%B9%B3%E8%A1%A1"><span class="toc-number">7.</span> <span class="toc-text">hdfs 各节点平衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hdfs-%E5%8D%95%E4%B8%AA%E8%8A%82%E7%82%B9%E5%A4%9A%E5%9D%97%E7%A3%81%E7%9B%98%E5%B9%B3%E8%A1%A1"><span class="toc-number">8.</span> <span class="toc-text">hdfs 单个节点多块磁盘平衡</span></a></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="Spark - 性能优化(一) 开发调优"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 性能优化(一) 开发调优"/></a><div class="content"><a class="title" href="/2021/08/11/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%80)%20%E5%BC%80%E5%8F%91%E8%B0%83%E4%BC%98/" title="Spark - 性能优化(一) 开发调优">Spark - 性能优化(一) 开发调优</a><time datetime="2021-08-11T10:22:07.860Z" title="发表于 2021-08-11 18:22:07">2021-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/01/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="Spark - 性能优化(四) Shuffle优化"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 性能优化(四) Shuffle优化"/></a><div class="content"><a class="title" href="/2021/06/01/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E5%9B%9B)%20Shuffle%E4%BC%98%E5%8C%96/" title="Spark - 性能优化(四) Shuffle优化">Spark - 性能优化(四) Shuffle优化</a><time datetime="2021-05-31T16:00:00.000Z" title="发表于 2021-06-01 00:00:00">2021-06-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/04/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="Spark - 性能优化(三) 数据倾斜"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 性能优化(三) 数据倾斜"/></a><div class="content"><a class="title" href="/2021/05/04/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%B8%89)%20%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/" title="Spark - 性能优化(三) 数据倾斜">Spark - 性能优化(三) 数据倾斜</a><time datetime="2021-05-03T16:00:00.000Z" title="发表于 2021-05-04 00:00:00">2021-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/01/25/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="Spark - 性能优化(二) 资源参数调优"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 性能优化(二) 资源参数调优"/></a><div class="content"><a class="title" href="/2021/01/25/Spark%20-%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96(%E4%BA%8C)%20%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" title="Spark - 性能优化(二) 资源参数调优">Spark - 性能优化(二) 资源参数调优</a><time datetime="2021-01-24T16:00:00.000Z" title="发表于 2021-01-25 00:00:00">2021-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/09/23/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spark - 自定义排序"/></a><div class="content"><a class="title" href="/2020/09/23/Spark%20-%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/" title="Spark - 自定义排序">Spark - 自定义排序</a><time datetime="2020-09-22T16:00:00.000Z" title="发表于 2020-09-23 00:00:00">2020-09-23</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 田一顷</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
